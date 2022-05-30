@@ -1,19 +1,33 @@
+using ApiPerformanceCompare.DataModel;
+using ApiPerformanceCompare.GraphQL.GraphQL;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var configurationManager = builder.Configuration;
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<DataContext>(o =>
+{
+    o.UseNpgsql(configurationManager.GetConnectionString("DefaultConnection"), b =>
+    {
+        b.MigrationsAssembly(typeof(DataContext).Assembly.FullName);
+        b.SetPostgresVersion(13, 2);
+    });
+});
+
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Query>()
+    .AddFileSystemQueryStorage("./PersistedQueries")
+    .UsePersistedQueryPipeline();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
@@ -21,5 +35,19 @@ app.UseHttpsRedirection();
 //app.UseAuthorization();
 
 //app.MapControllers();
+//app.UseCors();
+
+app.UseWebSockets();
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGraphQL();
+    endpoints.MapGet("/", context =>
+    {
+        context.Response.Redirect("/graphql", true);
+        return Task.CompletedTask;
+    });
+});
 
 app.Run();

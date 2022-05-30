@@ -22,9 +22,12 @@ namespace ApiPerformanceCompare.REST.Controllers
         public async Task<ActionResult<IEnumerable<Post>>> GetPosts(int blogId)
         {
             return Ok(
-                await context.Posts.Include(p => p.Blog)
+                await context.Posts
+                    .AsNoTracking()
+                    .Include(p => p.Blog)
                     .Where(p => p.Blog.BlogId == blogId)
                     .ToListAsync()
+                    .ConfigureAwait(false)
                     );
         }
     }

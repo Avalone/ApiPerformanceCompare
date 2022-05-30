@@ -8,11 +8,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="12.9.0" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="12.9.0" />
+    <PackageReference Include="HotChocolate.PersistedQueries.FileSystem" Version="12.9.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ApiPerformanceCompare.DataModel\ApiPerformanceCompare.DataModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PersistedQueries\" />
   </ItemGroup>
 
 </Project>
