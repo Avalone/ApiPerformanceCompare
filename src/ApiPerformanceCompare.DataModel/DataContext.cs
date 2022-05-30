@@ -21,10 +21,5 @@ public class DataContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-        DataContextSeed.Init(1000);
-
-        modelBuilder.Entity<Blog>().HasData(DataContextSeed.Blogs);
-        modelBuilder.Entity<Post>().HasData(DataContextSeed.Posts);
     }
 }
