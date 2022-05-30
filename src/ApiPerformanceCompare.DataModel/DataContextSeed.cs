@@ -1,5 +1,6 @@
 ﻿using ApiPerformanceCompare.DataModel.Entities;
 using Bogus;
+using Microsoft.Extensions.Logging;
 
 namespace ApiPerformanceCompare.DataModel
 {
@@ -32,6 +33,28 @@ namespace ApiPerformanceCompare.DataModel
 
             var blogs = blogFaker.Generate(count);
             DataContextSeed.Blogs.AddRange(blogs);
+        }
+
+        public static async void SeeedDatabaseData(DataContext context, ILogger logger)
+        {
+            var start = DateTime.Now;
+            if (!context.Blogs.Any())
+            {
+                try
+                {
+                    DataContextSeed.Init(1000);
+                    await context.Blogs.AddRangeAsync(DataContextSeed.Blogs);
+                    await context.Posts.AddRangeAsync(DataContextSeed.Posts);
+                    await context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError($"Data generation method failed: {ex.Message}", ex);
+                    throw;
+                }
+            }
+
+            logger.LogInformation("База данных актуализированна за " + (DateTime.Now - start));
         }
     }
 }
