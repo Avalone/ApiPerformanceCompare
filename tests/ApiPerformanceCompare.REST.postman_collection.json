@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "56d10153-0008-4ed4-b935-fee3b7e7a40d",
+		"name": "ApiPerformanceCompare.REST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "api/v1/posts/:blogId",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/plain"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/v1/posts/:blogId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"posts",
+						":blogId"
+					],
+					"variable": [
+						{
+							"key": "blogId",
+							"value": "3",
+							"description": "(Required) "
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Posts/api/v1/posts/:blogId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Posts",
+								"api",
+								"v1",
+								"posts",
+								":blogId"
+							],
+							"variable": [
+								{
+									"key": "blogId",
+									"value": "-84343872",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "[\n  {\n    \"postId\": -15537378,\n    \"title\": \"minim aliquip dolor\",\n    \"content\": \"amet i\",\n    \"blogId\": -33336409\n  },\n  {\n    \"postId\": -31489428,\n    \"title\": \"nulla fugiat in\",\n    \"content\": \"ut in\",\n    \"blogId\": 59019868\n  }\n]"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://localhost:7141",
+			"type": "string"
+		}
+	]
+}

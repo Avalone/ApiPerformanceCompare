@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ApiPerformanceCompare.REST.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    //[Route("[controller]")]
     public class PostsController : ControllerBase
     {
         private readonly ILogger<PostsController> logger;
